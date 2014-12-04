@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204005319) do
+ActiveRecord::Schema.define(version: 20141204093244) do
+
+  create_table "bluffs", force: true do |t|
+    t.text     "statement_1", limit: 90
+    t.text     "statement_2", limit: 90
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "statements", force: true do |t|
     t.text     "statement"
