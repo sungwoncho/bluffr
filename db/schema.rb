@@ -11,11 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204093244) do
+ActiveRecord::Schema.define(version: 20141205063805) do
 
   create_table "bluffs", force: true do |t|
     t.text     "statement_1", limit: 90
     t.text     "statement_2", limit: 90
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "matches", force: true do |t|
+    t.date     "date"
+    t.string   "home_team"
+    t.integer  "home_team_score"
+    t.string   "away_team"
+    t.integer  "away_team_score"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
