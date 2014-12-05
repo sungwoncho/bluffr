@@ -69,6 +69,6 @@ class BluffsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bluff_params
-      params[:bluff]
+      params.require(:bluff).permit(:statement_1, :statement_2)
     end
 end

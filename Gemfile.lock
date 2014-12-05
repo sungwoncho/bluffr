@@ -165,6 +165,9 @@ GEM
     shoulda-context (1.2.1)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
+    simple_form (3.0.2)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
     slop (3.6.0)
     spring (1.2.0)
     sprockets (2.12.3)
@@ -212,6 +215,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   selenium-webdriver (~> 2.43.0)
   shoulda
+  simple_form
   spring
   sqlite3
   turbolinks
