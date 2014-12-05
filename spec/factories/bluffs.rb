@@ -2,5 +2,7 @@
 
 FactoryGirl.define do
   factory :bluff do
-  end
+    statement_1 Faker::Lorem.sentence
+    statement_2 Faker::Lorem.sentence
+    end
 end
