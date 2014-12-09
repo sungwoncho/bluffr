@@ -29,6 +29,9 @@ gem 'spring',        group: :development
 # Forms made easy for Rails
 gem 'simple_form'
 
+# Makes http fun! Also, makes consuming restful web services dead easy.
+gem 'httparty', '~> 0.13.3'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
