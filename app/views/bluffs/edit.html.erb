@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @bluff %> |
-<%= link_to 'Back', bluffs_path %>
+<%= link_to 'Show', [@match, @bluff] %> |
+<%= link_to 'Back', match_bluffs_path(@match) %>
