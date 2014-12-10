@@ -46,4 +46,11 @@ RSpec.describe MatchDecorator, type: :decorator do
       end
     end
   end
+
+  describe "match_date" do
+    context "when match date is 2014-11-15" do
+      let(:match) { create(:match, date: Date.new(2014,11,15)) }
+      specify { expect(match.decorate.match_date).to eq '15 Nov 2014' }
+    end
+  end
 end

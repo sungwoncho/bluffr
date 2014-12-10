@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
   def index
-    @matches = Match.all.decorate
+    @matches = Match.order(date: :desc).decorate
   end
 end
