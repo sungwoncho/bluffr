@@ -1,10 +1,11 @@
 class BluffsController < ApplicationController
+  before_action :set_match
   before_action :set_bluff, only: [:show, :edit, :update, :destroy]
 
   # GET /bluffs
   # GET /bluffs.json
   def index
-    @bluffs = Bluff.all
+    @bluffs = @match.bluffs
   end
 
   # GET /bluffs/1
@@ -24,12 +25,12 @@ class BluffsController < ApplicationController
   # POST /bluffs
   # POST /bluffs.json
   def create
-    @bluff = Bluff.new(bluff_params)
+    @bluff = @match.bluffs.new(bluff_params)
 
     respond_to do |format|
       if @bluff.save
-        format.html { redirect_to @bluff, notice: 'Bluff was successfully created.' }
-        format.json { render :show, status: :created, location: @bluff }
+        format.html { redirect_to [@match, @bluff], notice: 'Bluff was successfully created.' }
+        format.json { render :show, status: :created, location: [@match, @bluff] }
       else
         format.html { render :new }
         format.json { render json: @bluff.errors, status: :unprocessable_entity }
@@ -42,8 +43,8 @@ class BluffsController < ApplicationController
   def update
     respond_to do |format|
       if @bluff.update(bluff_params)
-        format.html { redirect_to @bluff, notice: 'Bluff was successfully updated.' }
-        format.json { render :show, status: :ok, location: @bluff }
+        format.html { redirect_to [@match, @bluff], notice: 'Bluff was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@match, @bluff] }
       else
         format.html { render :edit }
         format.json { render json: @bluff.errors, status: :unprocessable_entity }
@@ -56,7 +57,7 @@ class BluffsController < ApplicationController
   def destroy
     @bluff.destroy
     respond_to do |format|
-      format.html { redirect_to bluffs_url, notice: 'Bluff was successfully destroyed.' }
+      format.html { redirect_to match_bluffs_url, notice: 'Bluff was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -64,7 +65,11 @@ class BluffsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bluff
-      @bluff = Bluff.find(params[:id])
+      @bluff = @match.bluffs.find(params[:id])
+    end
+
+    def set_match
+      @match = Match.find(params[:match_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

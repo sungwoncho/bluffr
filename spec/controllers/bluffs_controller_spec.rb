@@ -18,51 +18,42 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-RSpec.describe BluffsController, :type => :controller do
+RSpec.describe BluffsController, type: :controller do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Bluff. As you add validations to Bluff, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # BluffsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  let!(:match) { create(:match) }
+  let!(:match_2) { create(:match) }
+  let!(:bluff) { create(:bluff, match: match) }
+  let!(:bluff_2) { create(:bluff, match: match_2) }
 
   describe "GET index" do
-    it "assigns all bluffs as @bluffs" do
-      bluff = Bluff.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:bluffs)).to eq([bluff])
+    it "assigns all bluffs of the match as @bluffs" do
+      get :index, match_id: 1
+      expect(assigns(:bluffs)).to match_array [bluff]
     end
   end
 
   describe "GET show" do
     it "assigns the requested bluff as @bluff" do
-      bluff = Bluff.create! valid_attributes
-      get :show, {:id => bluff.to_param}, valid_session
+      get :show, match_id: match, id: bluff
       expect(assigns(:bluff)).to eq(bluff)
     end
   end
 
   describe "GET new" do
     it "assigns a new bluff as @bluff" do
-      get :new, {}, valid_session
+      get :new, match_id: match
       expect(assigns(:bluff)).to be_a_new(Bluff)
     end
+
+    # it "@bluff should belong to the requested match" do
+    #   get :new, match_id: match
+    #   expect(assigns(:bluff).match).to eq match
+    # end
   end
 
   describe "GET edit" do
     it "assigns the requested bluff as @bluff" do
-      bluff = Bluff.create! valid_attributes
-      get :edit, {:id => bluff.to_param}, valid_session
+      get :edit, match_id: match, id: bluff
       expect(assigns(:bluff)).to eq(bluff)
     end
   end
@@ -71,30 +62,30 @@ RSpec.describe BluffsController, :type => :controller do
     describe "with valid params" do
       it "creates a new Bluff" do
         expect {
-          post :create, {:bluff => valid_attributes}, valid_session
+          post :create, match_id: match, bluff: attributes_for(:bluff)
         }.to change(Bluff, :count).by(1)
       end
 
       it "assigns a newly created bluff as @bluff" do
-        post :create, {:bluff => valid_attributes}, valid_session
+        post :create, match_id: match, bluff: attributes_for(:bluff)
         expect(assigns(:bluff)).to be_a(Bluff)
         expect(assigns(:bluff)).to be_persisted
       end
 
       it "redirects to the created bluff" do
-        post :create, {:bluff => valid_attributes}, valid_session
-        expect(response).to redirect_to(Bluff.last)
+        post :create, match_id: match, bluff: attributes_for(:bluff)
+        expect(response).to redirect_to [match, Bluff.last]
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved bluff as @bluff" do
-        post :create, {:bluff => invalid_attributes}, valid_session
+        post :create, match_id: match, bluff: attributes_for(:bluff, statement_1: nil)
         expect(assigns(:bluff)).to be_a_new(Bluff)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:bluff => invalid_attributes}, valid_session
+        post :create, match_id: match, bluff: attributes_for(:bluff, statement_1: nil)
         expect(response).to render_template("new")
       end
     end
@@ -102,40 +93,32 @@ RSpec.describe BluffsController, :type => :controller do
 
   describe "PUT update" do
     describe "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
 
       it "updates the requested bluff" do
-        bluff = Bluff.create! valid_attributes
-        put :update, {:id => bluff.to_param, :bluff => new_attributes}, valid_session
+        put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff, statement_1: "changed statement")
         bluff.reload
-        skip("Add assertions for updated state")
+        expect(bluff.statement_1).to eq "changed statement"
       end
 
       it "assigns the requested bluff as @bluff" do
-        bluff = Bluff.create! valid_attributes
-        put :update, {:id => bluff.to_param, :bluff => valid_attributes}, valid_session
+        put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff)
         expect(assigns(:bluff)).to eq(bluff)
       end
 
       it "redirects to the bluff" do
-        bluff = Bluff.create! valid_attributes
-        put :update, {:id => bluff.to_param, :bluff => valid_attributes}, valid_session
-        expect(response).to redirect_to(bluff)
+        put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff)
+        expect(response).to redirect_to [match, bluff]
       end
     end
 
     describe "with invalid params" do
       it "assigns the bluff as @bluff" do
-        bluff = Bluff.create! valid_attributes
-        put :update, {:id => bluff.to_param, :bluff => invalid_attributes}, valid_session
+        put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff, statement_1: nil)
         expect(assigns(:bluff)).to eq(bluff)
       end
 
       it "re-renders the 'edit' template" do
-        bluff = Bluff.create! valid_attributes
-        put :update, {:id => bluff.to_param, :bluff => invalid_attributes}, valid_session
+        put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff, statement_1: nil)
         expect(response).to render_template("edit")
       end
     end
@@ -143,16 +126,14 @@ RSpec.describe BluffsController, :type => :controller do
 
   describe "DELETE destroy" do
     it "destroys the requested bluff" do
-      bluff = Bluff.create! valid_attributes
       expect {
-        delete :destroy, {:id => bluff.to_param}, valid_session
+        delete :destroy, match_id: match, id: bluff
       }.to change(Bluff, :count).by(-1)
     end
 
     it "redirects to the bluffs list" do
-      bluff = Bluff.create! valid_attributes
-      delete :destroy, {:id => bluff.to_param}, valid_session
-      expect(response).to redirect_to(bluffs_url)
+      delete :destroy, match_id: match, id: bluff
+      expect(response).to redirect_to(match_bluffs_url)
     end
   end
 
