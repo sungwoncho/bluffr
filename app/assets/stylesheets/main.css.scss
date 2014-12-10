@@ -1,0 +1,23 @@
+// To make bootstrap alert work with rails flash[:notice], and flash[:alert]
+$alert-danger-bg: #F04124;
+$alert-danger-border: #EA2F10;
+$alert-danger-text: #FFF;
+
+$alert-success-bg: #43AC6A;
+$alert-success-border: #3C9A5F;
+$alert-success-text: #FFF;
+
+@mixin alert-variant($background, $border, $text) {
+  background-color: $background;
+  border-color: $border;
+  color: $text;
+}
+
+.alert-notice {
+	@include alert-variant($alert-success-bg, $alert-success-border, $alert-success-text);
+}
+
+.alert-alert {
+	@include alert-variant($alert-danger-bg, $alert-danger-border, $alert-danger-text);
+}
+// Flash workaround ends
