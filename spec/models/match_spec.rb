@@ -9,12 +9,15 @@ RSpec.describe Match, type: :model do
     it { should validate_presence_of(:away_team_score) }
   end
 
-  describe "class methods" do
-    describe ".get_match" do
-      it "makes API call and store response to response" do
-        Match.get_match
-        expect(@response).to be_nil
-      end
+  describe "write_match" do
+    it "should create matches" do
+      expect { 
+        Match.write_match
+      }.to change(Match, :count).by(2)
+    end
+
+    it "does something" do
+      
     end
   end
 end
