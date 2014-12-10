@@ -16,13 +16,13 @@ class Match < ActiveRecord::Base
       away_team = match['match_visitorteam_name']
       away_team_score = match['match_visitorteam_score']
 
-      Match.create(
-        date: today,
-        home_team: home_team,
-        home_team_score: home_team_score,
-        away_team: away_team,
-        away_team_score: away_team_score
-        )
+    Match.create(
+      date: today,
+      home_team: home_team,
+      home_team_score: home_team_score,
+      away_team: away_team,
+      away_team_score: away_team_score
+      )
 
     end
   end
