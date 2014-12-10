@@ -5,3 +5,19 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require 'faker'
+
+Match.destroy_all
+
+10.times do
+  Match.create(
+    date: Faker::Date.between(1.month.ago, 1.day.ago),
+    home_team: Faker::Lorem.word,
+    home_team_score: [1,2,3].sample,
+    away_team: Faker::Lorem.word,
+    away_team_score: [1,2,3].sample
+  )
+end
+
+puts "Created #{Match.count} matches."
