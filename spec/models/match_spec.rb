@@ -38,4 +38,8 @@ RSpec.describe Match, type: :model do
       expect(second_match.away_team_score).to eq 2
     end
   end
+
+  it "has a valid factory" do
+    expect(build(:match)).to be_valid
+  end
 end

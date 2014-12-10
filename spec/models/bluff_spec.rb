@@ -12,7 +12,6 @@ RSpec.describe Bluff, type: :model do
     it { should belong_to(:match) }
   end
 
-
   it "has a valid factory" do
     expect(build(:bluff)).to be_valid
   end
