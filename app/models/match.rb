@@ -7,6 +7,18 @@ class Match < ActiveRecord::Base
 
   has_many :bluffs
 
+  def home_win?
+    home_team_score > away_team_score
+  end
+
+  def away_win?
+    away_team_score > home_team_score
+  end
+
+  def draw?
+    away_team_score == home_team_score
+  end
+
   def self.write_match
     today = Date.today
     match_getter = MatchGetter.new(today)

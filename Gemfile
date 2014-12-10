@@ -32,6 +32,9 @@ gem 'simple_form'
 # Makes http fun! Also, makes consuming restful web services dead easy.
 gem 'httparty', '~> 0.13.3'
 
+# Decorators/View-Models for Rails Applications
+gem 'draper', '~> 1.3'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

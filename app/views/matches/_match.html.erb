@@ -1,0 +1,11 @@
+<%= div_for match do %>
+  <div class="home-team">
+    <h2><%= match.home_team %></h2>
+    <h3 class="<%= home_score_color %>"><%= match.home_team_score %></h3>
+  </div>
+
+  <div class="away-team">
+    <h2><%= match.away_team %></h2>
+    <h3 class="<%= away_score_color %>"><%= match.away_team_score %></h3>
+  </div>
+<% end %>
