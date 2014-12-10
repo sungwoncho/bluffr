@@ -8,6 +8,10 @@ RSpec.describe Bluff, type: :model do
     it { should ensure_length_of(:statement_2).is_at_most(90)}
   end
 
+  describe "association" do
+    it { should belong_to(:match) }
+  end
+
 
   it "has a valid factory" do
     expect(build(:bluff)).to be_valid

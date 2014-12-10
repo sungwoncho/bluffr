@@ -5,6 +5,8 @@ class Match < ActiveRecord::Base
   validates_presence_of :away_team
   validates_presence_of :away_team_score
 
+  has_many :bluffs
+
   def self.write_match
     today = Date.today
     match_getter = MatchGetter.new(today)

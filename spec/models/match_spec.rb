@@ -9,6 +9,10 @@ RSpec.describe Match, type: :model do
     it { should validate_presence_of(:away_team_score) }
   end
 
+  describe "association" do
+    it { should have_many(:bluffs) }
+  end
+
   describe "write_match" do
     it "should create matches" do
       expect { 
