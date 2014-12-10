@@ -1,4 +1,7 @@
-<h1>Listing bluffs</h1>
+<time><%= @match.match_date %></time>
+<%= link_to 'Back to match list', matches_path %>
+
+<%= render partial: 'matches/score_detail', locals: { match: @match } %>
 
 <%= render @bluffs %>
 

@@ -5,7 +5,7 @@ class Match < ActiveRecord::Base
   validates_presence_of :away_team
   validates_presence_of :away_team_score
 
-  has_many :bluffs
+  has_many :bluffs, dependent: :destroy
 
   def home_win?
     home_team_score > away_team_score

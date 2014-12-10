@@ -15,7 +15,7 @@ RSpec.describe Match, type: :model do
   end
 
   describe "association" do
-    it { should have_many(:bluffs) }
+    it { should have_many(:bluffs).dependent(:destroy) }
   end
 
   describe "class methods" do

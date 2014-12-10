@@ -1,3 +1,7 @@
+textarea { 
+	resize: none;
+}
+
 // To make bootstrap alert work with rails flash[:notice], and flash[:alert]
 $alert-danger-bg: #F04124;
 $alert-danger-border: #EA2F10;

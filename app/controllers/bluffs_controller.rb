@@ -69,7 +69,7 @@ class BluffsController < ApplicationController
     end
 
     def set_match
-      @match = Match.find(params[:match_id])
+      @match = Match.find(params[:match_id]).decorate
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

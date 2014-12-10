@@ -12,16 +12,16 @@
   <% end %>
 
   <div class="actions">
-    <p>Did you see that ludicrous display last night?</p>
+    <p class="bubble-2">Did you see that ludicrous display last night?</p>
 
-    <%= f.input :statement_1 %>
+    <%= f.input :statement_1, placeholder: 'Reply', input_html: { class: "form-control bubble-1", autofocus: true } %>
 
-    <%= f.input :statement_2 %>
+    <%= f.input :statement_2, placeholder: 'Reply of reply', input_html: { class: "form-control bubble-2" } %><br>
 
-    <p>Yeah it is true. See you later, mate.</p>
+    <p class="bubble-1">Yeah it is true. See you later, mate.</p><br>
 
-    <p>Mind 'ow you go.</p>
+    <p class="bubble-2">Mind 'ow you go.</p><br>
 
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-success" %>
   </div>
 <% end %>
