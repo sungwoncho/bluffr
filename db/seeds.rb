@@ -9,6 +9,7 @@
 require 'faker'
 
 Match.destroy_all
+Bluff.destroy_all
 
 10.times do
   Match.create(
@@ -21,3 +22,15 @@ Match.destroy_all
 end
 
 puts "Created #{Match.count} matches."
+
+Match.all.each do |match|
+  12.times do
+    match.bluffs.create(
+      statement_1: Faker::Lorem.sentence,
+      statement_2: Faker::Lorem.sentence
+    )
+  end
+end
+
+puts "Created #{Bluff.count} bluffs."
+
