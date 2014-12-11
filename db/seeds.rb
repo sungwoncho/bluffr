@@ -10,6 +10,7 @@ require 'faker'
 
 Match.destroy_all
 Bluff.destroy_all
+User.destroy_all
 
 10.times do
   Match.create(
@@ -23,11 +24,21 @@ end
 
 puts "Created #{Match.count} matches."
 
+10.times do
+  User.create(
+    email: Faker::Internet.email,
+    password: 'pass1234'
+  )
+end
+
+puts "Created #{User.count} users."
+
 Match.all.each do |match|
   12.times do
     match.bluffs.create(
       statement_1: Faker::Lorem.sentence,
-      statement_2: Faker::Lorem.sentence
+      statement_2: Faker::Lorem.sentence,
+      user_id: (1..10).to_a.sample
     )
   end
 end
