@@ -8,6 +8,11 @@ RSpec.describe User, :type => :model do
   describe "valdiation" do
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:password) }
+    it { should validate_presence_of(:username) }
+    it { should ensure_length_of(:username).is_at_most(15) }
+    it { should validate_uniqueness_of(:username) }
+    it { should allow_value("john1", "john2", "john_1").for(:username) }
+    it { should_not allow_value("@", "john#", "<>=").for(:username) }
   end
 
   describe "association" do

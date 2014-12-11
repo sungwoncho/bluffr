@@ -24,9 +24,10 @@ end
 
 puts "Created #{Match.count} matches."
 
-10.times do
+10.times do |n|
   User.create(
-    email: Faker::Internet.email,
+    username: "user_#{n}",
+    email: "user_#{n}@example.com",
     password: 'pass1234'
   )
 end
