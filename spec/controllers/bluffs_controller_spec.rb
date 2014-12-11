@@ -26,6 +26,10 @@ RSpec.describe BluffsController, type: :controller do
   let!(:bluff) { create(:bluff, match: match) }
   let!(:bluff_2) { create(:bluff, match: match_2) }
 
+  before :each do
+    sign_in user
+  end
+
   describe "GET index" do
     it "assigns all bluffs of the match as @bluffs" do
       get :index, match_id: 1
@@ -39,102 +43,161 @@ RSpec.describe BluffsController, type: :controller do
   end
 
   describe "GET show" do
-    it "assigns the requested bluff as @bluff" do
+
+    it "requires login" do
+      sign_out user
       get :show, match_id: match, id: bluff
-      expect(assigns(:bluff)).to eq(bluff)
+      expect(response).to require_login
+    end
+
+    context "when logged in" do
+      it "assigns the requested bluff as @bluff" do
+        get :show, match_id: match, id: bluff
+        expect(assigns(:bluff)).to eq(bluff)
+      end
     end
   end
 
   describe "GET new" do
-    it "assigns a new bluff as @bluff" do
+
+    it "requires login" do
+      sign_out user
       get :new, match_id: match
-      expect(assigns(:bluff)).to be_a_new(Bluff)
+      expect(response).to require_login
+    end
+
+    context "when logged in" do
+      it "assigns a new bluff as @bluff" do
+        get :new, match_id: match
+        expect(assigns(:bluff)).to be_a_new(Bluff)
+      end
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested bluff as @bluff" do
+
+    it "requires login" do
+      sign_out user
       get :edit, match_id: match, id: bluff
-      expect(assigns(:bluff)).to eq(bluff)
+      expect(response).to require_login
+    end
+
+    context "when logged in" do
+      it "assigns the requested bluff as @bluff" do
+        get :edit, match_id: match, id: bluff
+        expect(assigns(:bluff)).to eq(bluff)
+      end
     end
   end
 
   describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Bluff" do
-        expect {
-          post :create, match_id: match, bluff: attributes_for(:bluff)
-        }.to change(Bluff, :count).by(1)
-      end
 
-      it "assigns a newly created bluff as @bluff" do
-        post :create, match_id: match, bluff: attributes_for(:bluff)
-        expect(assigns(:bluff)).to be_a(Bluff)
-        expect(assigns(:bluff)).to be_persisted
-      end
-
-      it "redirects to the created bluff" do
-        post :create, match_id: match, bluff: attributes_for(:bluff)
-        expect(response).to redirect_to [match, Bluff.last]
-      end
+    it "requires login" do
+      sign_out user
+      post :create, match_id: match, bluff: attributes_for(:bluff)
+      expect(response).to require_login
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved bluff as @bluff" do
-        post :create, match_id: match, bluff: attributes_for(:bluff, statement_1: nil)
-        expect(assigns(:bluff)).to be_a_new(Bluff)
+    context "when logged in" do
+      describe "with valid params" do
+        it "creates a new Bluff" do
+          expect {
+            post :create, match_id: match, bluff: attributes_for(:bluff)
+          }.to change(Bluff, :count).by(1)
+        end
+
+        it "assigns a newly created bluff as @bluff" do
+          post :create, match_id: match, bluff: attributes_for(:bluff)
+          expect(assigns(:bluff)).to be_a(Bluff)
+          expect(assigns(:bluff)).to be_persisted
+        end
+
+        it "sets @bluff to belong to the current user" do
+          post :create, match_id: match, bluff: attributes_for(:bluff)
+          expect(assigns(:bluff).author).to eq user
+        end
+
+        it "redirects to the created bluff" do
+          post :create, match_id: match, bluff: attributes_for(:bluff)
+          expect(response).to redirect_to [match, Bluff.last]
+        end
       end
 
-      it "re-renders the 'new' template" do
-        post :create, match_id: match, bluff: attributes_for(:bluff, statement_1: nil)
-        expect(response).to render_template("new")
+      describe "with invalid params" do
+        it "assigns a newly created but unsaved bluff as @bluff" do
+          post :create, match_id: match, bluff: attributes_for(:bluff, statement_1: nil)
+          expect(assigns(:bluff)).to be_a_new(Bluff)
+        end
+
+        it "re-renders the 'new' template" do
+          post :create, match_id: match, bluff: attributes_for(:bluff, statement_1: nil)
+          expect(response).to render_template("new")
+        end
       end
     end
   end
 
   describe "PUT update" do
-    describe "with valid params" do
 
-      it "updates the requested bluff" do
-        put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff, statement_1: "changed statement")
-        bluff.reload
-        expect(bluff.statement_1).to eq "changed statement"
-      end
-
-      it "assigns the requested bluff as @bluff" do
-        put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff)
-        expect(assigns(:bluff)).to eq(bluff)
-      end
-
-      it "redirects to the bluff" do
-        put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff)
-        expect(response).to redirect_to [match, bluff]
-      end
+    it "requires login" do
+      sign_out user
+      put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff, statement_1: "changed statement")
+      expect(response).to require_login
     end
 
-    describe "with invalid params" do
-      it "assigns the bluff as @bluff" do
-        put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff, statement_1: nil)
-        expect(assigns(:bluff)).to eq(bluff)
+    context "when logged in" do
+      describe "with valid params" do
+
+        it "updates the requested bluff" do
+          put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff, statement_1: "changed statement")
+          bluff.reload
+          expect(bluff.statement_1).to eq "changed statement"
+        end
+
+        it "assigns the requested bluff as @bluff" do
+          put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff)
+          expect(assigns(:bluff)).to eq(bluff)
+        end
+
+        it "redirects to the bluff" do
+          put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff)
+          expect(response).to redirect_to [match, bluff]
+        end
       end
 
-      it "re-renders the 'edit' template" do
-        put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff, statement_1: nil)
-        expect(response).to render_template("edit")
+      describe "with invalid params" do
+        it "assigns the bluff as @bluff" do
+          put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff, statement_1: nil)
+          expect(assigns(:bluff)).to eq(bluff)
+        end
+
+        it "re-renders the 'edit' template" do
+          put :update, match_id: match, id: bluff, bluff: attributes_for(:bluff, statement_1: nil)
+          expect(response).to render_template("edit")
+        end
       end
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested bluff" do
-      expect {
-        delete :destroy, match_id: match, id: bluff
-      }.to change(Bluff, :count).by(-1)
+
+    it "requires login" do
+      sign_out user
+      delete :destroy, match_id: match, id: bluff
+      expect(response).to require_login
     end
 
-    it "redirects to the bluffs list" do
-      delete :destroy, match_id: match, id: bluff
-      expect(response).to redirect_to(match_bluffs_url)
+    context "when logged in" do
+      it "destroys the requested bluff" do
+        expect {
+          delete :destroy, match_id: match, id: bluff
+        }.to change(Bluff, :count).by(-1)
+      end
+
+      it "redirects to the bluffs list" do
+        delete :destroy, match_id: match, id: bluff
+        expect(response).to redirect_to(match_bluffs_url)
+      end
     end
   end
 

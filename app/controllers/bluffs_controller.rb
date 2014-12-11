@@ -1,5 +1,5 @@
 class BluffsController < ApplicationController
-  skip_before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: [:index]
   before_action :set_match
   before_action :set_bluff, only: [:show, :edit, :update, :destroy]
 
@@ -29,7 +29,7 @@ class BluffsController < ApplicationController
     @bluff = @match.bluffs.new(bluff_params)
 
     respond_to do |format|
-      if @bluff.save
+      if @bluff.save & current_user.authored_bluffs << @bluff
         format.html { redirect_to [@match, @bluff], notice: 'Bluff was successfully created.' }
         format.json { render :show, status: :created, location: [@match, @bluff] }
       else
