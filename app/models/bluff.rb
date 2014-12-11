@@ -10,4 +10,8 @@ class Bluff < ActiveRecord::Base
   belongs_to :user
   has_many :likes
   has_many :likers, through: :likes, source: :user
+
+  def like_count
+    Like.where(bluff_id: self.id).count
+  end
 end

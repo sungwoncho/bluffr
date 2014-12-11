@@ -26,7 +26,7 @@ RSpec.describe User, :type => :model do
     let(:user) { create(:user) }
     let(:bluff) { create(:bluff) }
 
-    describe "liked?" do
+    describe "#liked?" do
       context "when user liked the bluff" do
         before { create(:like, user: user, bluff: bluff) }
         specify { expect(user.liked?(bluff)).to be true }
