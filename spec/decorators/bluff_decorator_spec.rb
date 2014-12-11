@@ -37,6 +37,13 @@ describe BluffDecorator, type: :decorator do
         expect(bluff.decorate.unlike_button).to include 'unlike'
       end
     end
+
+    context "when Like does not exist" do
+      it "outputs nothing" do
+        bluff = create(:bluff)
+        expect(bluff.decorate.unlike_button).to eq nil
+      end
+    end
   end
 
   describe "author_name" do
