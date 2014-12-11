@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
   has_many :likes, dependent: :destroy
   has_many :liked_bluffs, through: :likes, source: :bluff
   has_many :authored_bluffs, class_name: 'Bluff', dependent: :destroy
+
+  def liked?(bluff)
+    Like.find_by(user_id: self.id, bluff_id: bluff.id).present?
+  end
 end
