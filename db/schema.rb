@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141211033734) do
+ActiveRecord::Schema.define(version: 20141211052021) do
 
   create_table "bluffs", force: true do |t|
     t.text     "statement_1", limit: 90
@@ -19,9 +19,11 @@ ActiveRecord::Schema.define(version: 20141211033734) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "match_id"
+    t.integer  "user_id"
   end
 
   add_index "bluffs", ["match_id"], name: "index_bluffs_on_match_id"
+  add_index "bluffs", ["user_id"], name: "index_bluffs_on_user_id"
 
   create_table "matches", force: true do |t|
     t.date     "date"

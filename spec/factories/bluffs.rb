@@ -2,8 +2,9 @@
 
 FactoryGirl.define do
   factory :bluff do
-    statement_1 { Faker::Lorem.sentence }
-    statement_2 { Faker::Lorem.sentence }
-    association :match
+      statement_1 { Faker::Lorem.sentence }
+      statement_2 { Faker::Lorem.sentence }
+      association :match
+      user_id 1
     end
 end
