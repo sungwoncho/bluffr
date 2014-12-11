@@ -44,6 +44,9 @@ gem 'will_paginate', '~> 3.0.6'
 # Integrates the Twitter Bootstrap pagination component with will_paginate 
 gem 'will_paginate-bootstrap'
 
+# Flexible authentication solution for Rails with Warden
+gem 'devise'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

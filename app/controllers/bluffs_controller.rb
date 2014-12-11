@@ -1,4 +1,5 @@
 class BluffsController < ApplicationController
+  skip_before_action :authenticate_user!
   before_action :set_match
   before_action :set_bluff, only: [:show, :edit, :update, :destroy]
 
