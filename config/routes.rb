@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  root 'static_pages#home'
+
   resources :matches, only: :index do
     resources :bluffs
   end

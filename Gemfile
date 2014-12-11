@@ -35,6 +35,9 @@ gem 'httparty', '~> 0.13.3'
 # Decorators/View-Models for Rails Applications
 gem 'draper', '~> 1.3'
 
+# Font Awesome gives you scalable vector icons that can instantly be customized
+gem 'font-awesome-sass', '~> 4.2.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
