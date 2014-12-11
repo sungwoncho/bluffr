@@ -36,5 +36,9 @@ RSpec.describe User, :type => :model do
         specify { expect(user.liked?(bluff)).to be false }
       end
     end
+
+    describe "#to_param" do
+      specify { expect(user.to_param).to eq user.username }
+    end
   end
 end

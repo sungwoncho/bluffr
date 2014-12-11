@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
   def liked?(bluff)
     Like.find_by(user_id: self.id, bluff_id: bluff.id).present?
   end
+
+  def to_param
+    username
+  end
 end
