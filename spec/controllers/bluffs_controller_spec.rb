@@ -20,6 +20,7 @@ require 'rails_helper'
 
 RSpec.describe BluffsController, type: :controller do
 
+  let(:user) { create(:user) }
   let!(:match) { create(:match) }
   let!(:match_2) { create(:match) }
   let!(:bluff) { create(:bluff, match: match) }
@@ -44,11 +45,6 @@ RSpec.describe BluffsController, type: :controller do
       get :new, match_id: match
       expect(assigns(:bluff)).to be_a_new(Bluff)
     end
-
-    # it "@bluff should belong to the requested match" do
-    #   get :new, match_id: match
-    #   expect(assigns(:bluff).match).to eq match
-    # end
   end
 
   describe "GET edit" do
@@ -134,6 +130,60 @@ RSpec.describe BluffsController, type: :controller do
     it "redirects to the bluffs list" do
       delete :destroy, match_id: match, id: bluff
       expect(response).to redirect_to(match_bluffs_url)
+    end
+  end
+
+  describe "POST like" do
+
+    it "should require login" do
+      post :like, match_id: match, id: bluff
+      expect(response).to require_login
+    end
+
+    context "when logged in" do
+
+      before :each do
+        sign_in user
+        request.env["HTTP_REFERER"] = match_bluffs_url(match) # for testing redirect_to :back
+      end
+
+      context "with no duplicates" do
+        it "creates a new Like" do
+          expect { 
+            post :like, match_id: match, id: bluff
+          }.to change(Like, :count).by(1)
+        end
+
+        it "sets Like to belong to the user" do
+          post :like, match_id: match, id: bluff
+          expect(Like.last.user).to eq user
+        end
+
+        it "sets Like to belong to the bluff" do
+          post :like, match_id: match, id: bluff
+          expect(Like.last.bluff).to eq bluff
+        end
+
+        it "redirects to bluff index" do
+          post :like, match_id: match, id: bluff
+          expect(response).to redirect_to :back
+        end
+      end
+
+      context "with duplicates" do
+        it "doesn't create a new Like" do
+          create(:like, bluff_id: bluff.id, user_id: user.id)
+
+          expect { 
+            post :like, match_id: match, id: bluff
+          }.to change(Like, :count).by(0)
+        end
+
+        it "redirects to bluff index" do
+          post :like, match_id: match, id: bluff
+          expect(response).to redirect_to :back
+        end
+      end
     end
   end
 

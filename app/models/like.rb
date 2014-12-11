@@ -1,6 +1,6 @@
 class Like < ActiveRecord::Base
   validates_uniqueness_of :bluff_id, scope: :user_id
-  validate :ensure_not_author
+  # validate :ensure_not_author
 
   belongs_to :user
   belongs_to :bluff

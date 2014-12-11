@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 
   resources :matches, only: :index do
-    resources :bluffs
+    resources :bluffs do
+      member { post :like }
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
