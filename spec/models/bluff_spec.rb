@@ -13,6 +13,8 @@ RSpec.describe Bluff, type: :model do
   describe "association" do
     it { should belong_to(:match) }
     it { should belong_to(:user) }
+    it { should have_many(:likes) }
+    it { should have_many(:likers).through(:likes).source(:user) }
   end
 
   it "has a valid factory" do

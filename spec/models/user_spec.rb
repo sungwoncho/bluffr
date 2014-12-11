@@ -16,6 +16,8 @@ RSpec.describe User, :type => :model do
   end
 
   describe "association" do
-    it { should have_many(:bluffs).dependent(:destroy) }
+    it { should have_many(:likes).dependent(:destroy) }
+    it { should have_many(:liked_bluffs).through(:likes).source(:bluff) }
+    it { should have_many(:authored_bluffs).class_name('Bluff').dependent(:destroy) }
   end
 end

@@ -9,5 +9,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username
   validates_format_of :username, with: /\A[-a-z\d_]+\z/i
 
-  has_many :bluffs, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :liked_bluffs, through: :likes, source: :bluff
+  has_many :authored_bluffs, class_name: 'Bluff', dependent: :destroy
 end
