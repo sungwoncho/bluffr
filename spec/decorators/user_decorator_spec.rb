@@ -17,7 +17,7 @@ describe UserDecorator do
 
   describe "bluff_count" do
     it "counts the number of authored bluffs" do
-      3.times { create(:bluff, user: user) }
+      3.times { create(:bluff, author: user) }
       expect(user.decorate.bluff_count).to eq 3
     end
   end

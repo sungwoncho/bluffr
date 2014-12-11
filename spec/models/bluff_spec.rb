@@ -16,7 +16,7 @@ RSpec.describe Bluff, type: :model do
 
   describe "association" do
     it { should belong_to(:match) }
-    it { should belong_to(:user) }
+    it { should belong_to(:author).class_name('User') }
     it { should have_many(:likes) }
     it { should have_many(:likers).through(:likes).source(:user) }
   end

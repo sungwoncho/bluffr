@@ -6,4 +6,8 @@ class BluffDecorator < Draper::Decorator
     link_to "like", like_match_bluff_path(match, bluff), method: :post unless current_user.liked?(model)
   end
 
+  def author_name
+    model.author.username
+  end
+
 end

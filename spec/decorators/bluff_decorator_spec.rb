@@ -26,4 +26,12 @@ describe BluffDecorator, type: :decorator do
       end
     end
   end
+
+  describe "author_name" do
+    it "outputs author's username" do
+      user = create(:user, username: 'test_user_1')
+      bluff = create(:bluff, user_id: user.id)
+      expect(bluff.decorate.author_name).to eq 'test_user_1'
+    end
+  end
 end
