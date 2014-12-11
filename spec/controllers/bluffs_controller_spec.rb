@@ -31,6 +31,11 @@ RSpec.describe BluffsController, type: :controller do
       get :index, match_id: 1
       expect(assigns(:bluffs)).to match_array [bluff]
     end
+
+    it "decorates @bluffs" do
+      get :index, match_id: 1
+      expect(assigns(:bluffs)).to be_decorated
+    end
   end
 
   describe "GET show" do

@@ -6,7 +6,7 @@ class BluffsController < ApplicationController
   # GET /bluffs
   # GET /bluffs.json
   def index
-    @bluffs = @match.bluffs.paginate(page: params[:page], per_page: 5)
+    @bluffs = @match.bluffs.paginate(page: params[:page], per_page: 5).decorate
   end
 
   # GET /bluffs/1
