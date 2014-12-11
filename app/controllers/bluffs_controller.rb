@@ -1,5 +1,5 @@
 class BluffsController < ApplicationController
-  skip_before_action :authenticate_user!, except: :like
+  skip_before_action :authenticate_user!
   before_action :set_match
   before_action :set_bluff, only: [:show, :edit, :update, :destroy]
 
@@ -60,18 +60,6 @@ class BluffsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to match_bluffs_url, notice: 'Bluff was successfully destroyed.' }
       format.json { head :no_content }
-    end
-  end
-
-  def like
-    like = current_user.likes.new(bluff_id: params[:id])
-
-    respond_to do |format|
-      if like.save
-        format.html { redirect_to :back, notice: "You liked the bluff!" }
-      else
-        format.html { redirect_to :back, notice: "An error occurred." }
-      end
     end
   end
 

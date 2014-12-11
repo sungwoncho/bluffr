@@ -27,6 +27,18 @@ describe BluffDecorator, type: :decorator do
     end
   end
 
+  describe "unlike_button" do
+    
+    context "when Like already exists" do
+      it "outputs unlike button" do
+        bluff = create(:bluff)
+        create(:like, bluff_id: bluff.id, user_id: user.id)
+
+        expect(bluff.decorate.unlike_button).to include 'unlike'
+      end
+    end
+  end
+
   describe "author_name" do
     it "outputs author's username" do
       user = create(:user, username: 'test_user_1')
@@ -35,10 +47,10 @@ describe BluffDecorator, type: :decorator do
     end
   end
 
-  describe "#like_count" do
+  describe "like_count" do
     it "counts the number of likes" do
       bluff = create(:bluff)
-      
+
       3.times do |n|
         create(:like, bluff_id: bluff.id, user_id: n)
       end
