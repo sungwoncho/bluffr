@@ -1,3 +1,5 @@
 <h1>Matches</h1>
 
 <%= render @matches %>
+
+<%= will_paginate @matches, renderer: BootstrapPagination::Rails %>

@@ -38,6 +38,12 @@ gem 'draper', '~> 1.3'
 # Font Awesome gives you scalable vector icons that can instantly be customized
 gem 'font-awesome-sass', '~> 4.2.0'
 
+# Pagination library for Rails
+gem 'will_paginate', '~> 3.0.6'
+
+# Integrates the Twitter Bootstrap pagination component with will_paginate 
+gem 'will_paginate-bootstrap'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
