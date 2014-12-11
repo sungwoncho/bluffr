@@ -20,19 +20,4 @@ RSpec.describe Bluff, type: :model do
     it { should have_many(:likes) }
     it { should have_many(:likers).through(:likes).source(:user) }
   end
-
-  describe "instance methods" do
-
-    let(:bluff) { create(:bluff) }
-
-    describe "#like_count" do
-      it "counts the number of likes" do
-        3.times do |n|
-          create(:like, bluff_id: bluff.id, user_id: n)
-        end
-
-        expect(bluff.like_count).to eq 3
-      end
-    end
-  end
 end

@@ -7,7 +7,11 @@ class BluffDecorator < Draper::Decorator
   end
 
   def author_name
-    model.author.username
+    author.username
+  end
+
+  def like_count
+    likes.count
   end
 
 end

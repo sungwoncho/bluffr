@@ -34,4 +34,16 @@ describe BluffDecorator, type: :decorator do
       expect(bluff.decorate.author_name).to eq 'test_user_1'
     end
   end
+
+  describe "#like_count" do
+    it "counts the number of likes" do
+      bluff = create(:bluff)
+      
+      3.times do |n|
+        create(:like, bluff_id: bluff.id, user_id: n)
+      end
+
+      expect(bluff.decorate.like_count).to eq 3
+    end
+  end
 end
