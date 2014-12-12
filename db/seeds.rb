@@ -13,7 +13,7 @@ Bluff.destroy_all
 User.destroy_all
 
 10.times do
-  Match.create(
+  Match.create!(
     date: Faker::Date.between(1.month.ago, 1.day.ago),
     home_team: Faker::Lorem.word,
     home_team_score: [1,2,3].sample,
@@ -25,7 +25,7 @@ end
 puts "Created #{Match.count} matches."
 
 10.times do |n|
-  User.create(
+  User.create!(
     username: "user_#{n}",
     email: "user_#{n}@example.com",
     password: 'pass1234'
@@ -36,7 +36,7 @@ puts "Created #{User.count} users."
 
 Match.all.each do |match|
   12.times do
-    match.bluffs.create(
+    match.bluffs.create!(
       statement_1: Faker::Lorem.sentence,
       statement_2: Faker::Lorem.sentence,
       user_id: (1..10).to_a.sample
@@ -45,4 +45,13 @@ Match.all.each do |match|
 end
 
 puts "Created #{Bluff.count} bluffs."
+
+User.create!(
+  username: "test_bluffr",
+  email: "test@test.com",
+  password: 'awesomebluffr'
+
+)
+
+puts "Created a test account"
 
