@@ -3,11 +3,16 @@
 
 <%= render partial: 'matches/score_detail', locals: { match: @match } %>
 
+<div>
+Sort: 
 <%= link_to "popular", match_bluffs_path(@match, sort: 'popular') %>
 <%= link_to "newest", match_bluffs_path(@match, sort: 'newest') %>
+</div>
+<br>
+<%= link_to 'New Bluff', new_match_bluff_path(@match), class: 'btn btn-success' %>
 
 <%= render @bluffs %>
 
 <%= will_paginate @bluffs, renderer: BootstrapPagination::Rails %>
 
-<%= link_to 'New Bluff', new_match_bluff_path(@match) %>
+
