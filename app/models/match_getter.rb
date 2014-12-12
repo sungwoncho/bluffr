@@ -11,7 +11,9 @@ class MatchGetter
   def get_match
     call = '/api'
     action = 'today'
-    # Call API and return json response
+
+    # Call API and return json body of response
     response = HTTParty.get("http://football-api.com/#{call}/?Action=#{action}&APIKey=#{API_KEY}&comp_id=#{COMPETITION_ID}")
+    puts response.body
   end
 end
