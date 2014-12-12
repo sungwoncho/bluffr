@@ -94,4 +94,22 @@ describe BluffDecorator, type: :decorator do
       end
     end
   end
+
+  describe "delete_button" do
+    context "when bluff owner" do
+      it "outputs delete button" do
+        bluff = create(:bluff, user_id: user.id)
+
+        expect(bluff.decorate.delete_button).to include 'delete'       
+      end
+    end
+
+    context "when not bluff owner" do
+      it "outputs nothing" do
+        bluff = create(:bluff, user_id: 2)
+
+        expect(bluff.decorate.delete_button).to eq nil       
+      end
+    end
+  end
 end

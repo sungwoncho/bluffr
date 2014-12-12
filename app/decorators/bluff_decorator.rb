@@ -14,6 +14,10 @@ class BluffDecorator < Draper::Decorator
     end
   end
 
+  def delete_button
+    link_to "delete", match_bluff_path(model.match.id, model), method: :delete if model.author == current_user
+  end
+
   def author_name
     author.username
   end

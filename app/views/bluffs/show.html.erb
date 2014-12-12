@@ -2,3 +2,5 @@
 
 <%= link_to 'Edit', edit_match_bluff_path(@match, @bluff) %> |
 <%= link_to 'Back', match_bluffs_path(@match) %>
+<br><br>
+<%= @bluff.delete_button %>
