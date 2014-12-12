@@ -14,7 +14,9 @@ class Bluff < ActiveRecord::Base
   scope :sort, ->(rule){ 
     case rule
     when 'popular'
-      # todo
+      order(cached_likes: :desc)
+    when 'newest'
+      order(created_at: :desc)
     end
   }
 

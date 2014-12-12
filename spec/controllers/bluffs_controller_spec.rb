@@ -41,15 +41,28 @@ RSpec.describe BluffsController, type: :controller do
       expect(assigns(:bluffs)).to be_decorated
     end
 
-    context "with params[:sort] == popular" do
+    context "with params[:rule] == 'popular'" do
       it "sorts @bluffs by likes in descending order" do
-        create(:like, bluff: bluff_2, user_id: 1)
-        create(:like, bluff: bluff_2, user_id: 2)
-        create(:like, bluff: bluff)
-        bluff_3 = create(:bluff)
+        bluff_3 = create(:bluff, match: match)
+        bluff_4 = create(:bluff, match: match)
 
-        get :index, match_id: 1, sort: 'popular'
-        expect(assigns(:bluffs)).to eq [bluff_2, bluff, bluff_3]
+        create(:like, bluff: bluff_3, user_id: 1)
+        create(:like, bluff: bluff_3, user_id: 2)
+        create(:like, bluff: bluff_4)
+        bluff_3.update_cached_likes
+        bluff_4.update_cached_likes
+
+        get :index, match_id: 1, rule: 'popular'
+        expect(assigns(:bluffs)).to eq [bluff_3, bluff_4, bluff]
+      end
+    end
+
+    context "with params[:rule] == 'newest'" do
+      it "sorts @bluffs by created time in descending order" do
+        bluff_3 = create(:bluff, match: match, created_at: 1.day.ago)
+
+        get :index, match_id: 1, rule: 'newest'
+        expect(assigns(:bluffs)).to eq [bluff, bluff_3]        
       end
     end
   end
