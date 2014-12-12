@@ -3,11 +3,15 @@ class BluffDecorator < Draper::Decorator
   include Draper::LazyHelpers
 
   def like_button
-    link_to "like", likes_path(id: bluff), method: :post unless current_user.liked?(model)
+    if user_signed_in?
+      link_to "like", likes_path(id: bluff), method: :post unless current_user.liked?(model)
+    end
   end
 
   def unlike_button
-    link_to "unlike", like_path(bluff), method: :delete if current_user.liked?(model)
+    if user_signed_in?
+      link_to "unlike", like_path(bluff), method: :delete if current_user.liked?(model)
+    end
   end
 
   def author_name

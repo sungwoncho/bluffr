@@ -10,18 +10,28 @@ describe BluffDecorator, type: :decorator do
 
   describe "like_button" do
 
-    context "with no duplicate likes" do
-      it "outputs like button" do
-        bluff = create(:bluff)
+    context "when logged in" do
+      context "with no duplicate likes" do
+        it "outputs like button" do
+          bluff = create(:bluff)
 
-        expect(bluff.decorate.like_button).to include 'like'
+          expect(bluff.decorate.like_button).to include 'like'
+        end
+      end
+
+      context "with duplicate likes" do
+        it "outputs nothing" do
+          bluff = create(:bluff)
+          create(:like, bluff_id: bluff.id, user_id: user.id)
+          expect(bluff.decorate.like_button).to eq nil
+        end
       end
     end
 
-    context "with duplicate likes" do
+    context "when not logged in" do
       it "outputs nothing" do
+        sign_out user
         bluff = create(:bluff)
-        create(:like, bluff_id: bluff.id, user_id: user.id)
         expect(bluff.decorate.like_button).to eq nil
       end
     end
@@ -29,19 +39,29 @@ describe BluffDecorator, type: :decorator do
 
   describe "unlike_button" do
     
-    context "when Like already exists" do
-      it "outputs unlike button" do
-        bluff = create(:bluff)
-        create(:like, bluff_id: bluff.id, user_id: user.id)
+    context "when logged in" do
+      context "when Like already exists" do
+        it "outputs unlike button" do
+          bluff = create(:bluff)
+          create(:like, bluff_id: bluff.id, user_id: user.id)
 
-        expect(bluff.decorate.unlike_button).to include 'unlike'
+          expect(bluff.decorate.unlike_button).to include 'unlike'
+        end
+      end
+
+      context "when Like does not exist" do
+        it "outputs nothing" do
+          bluff = create(:bluff)
+          expect(bluff.decorate.unlike_button).to eq nil
+        end
       end
     end
 
-    context "when Like does not exist" do
+    context "when not logged in" do
       it "outputs nothing" do
+        sign_out user
         bluff = create(:bluff)
-        expect(bluff.decorate.unlike_button).to eq nil
+        expect(bluff.decorate.like_button).to eq nil        
       end
     end
   end
