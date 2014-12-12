@@ -11,7 +11,7 @@ Sort:
 <br>
 <%= link_to 'New Bluff', new_match_bluff_path(@match), class: 'btn btn-success' %>
 
-<%= render @bluffs %>
+<%= render @bluffs || "There are no bluffs submitted. Be the first!" %>
 
 <%= will_paginate @bluffs, renderer: BootstrapPagination::Rails %>
 
