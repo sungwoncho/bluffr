@@ -47,6 +47,9 @@ gem 'will_paginate-bootstrap'
 # Flexible authentication solution for Rails with Warden
 gem 'devise'
 
+# Cron jobs in Ruby
+gem 'whenever', :require => false
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
