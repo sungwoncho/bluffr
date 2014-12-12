@@ -9,12 +9,6 @@ RSpec.describe UsersController, type: :controller do
       sign_in user
     end
 
-    it "requires login" do
-      sign_out user
-      get :show, id: user
-      expect(response).to require_login
-    end
-
     it "assigns the requested user as @user" do
       get :show, id: user
       expect(assigns(:user)).to eq(user)
