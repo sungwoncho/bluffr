@@ -3,6 +3,9 @@
 
 <%= render partial: 'matches/score_detail', locals: { match: @match } %>
 
+<%= link_to "popular", match_bluffs_path(@match, sort: 'popular') %>
+<%= link_to "newest", match_bluffs_path(@match, sort: 'newest') %>
+
 <%= render @bluffs %>
 
 <%= will_paginate @bluffs, renderer: BootstrapPagination::Rails %>

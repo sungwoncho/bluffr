@@ -11,8 +11,8 @@ class Bluff < ActiveRecord::Base
   has_many :likes
   has_many :likers, through: :likes, source: :user
 
-  scope :sort, ->(rule){ 
-    case rule
+  scope :sort, ->(sort){ 
+    case sort
     when 'popular'
       order(cached_likes: :desc)
     when 'newest'
