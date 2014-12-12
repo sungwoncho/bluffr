@@ -20,4 +20,19 @@ RSpec.describe Bluff, type: :model do
     it { should have_many(:likes) }
     it { should have_many(:likers).through(:likes).source(:user) }
   end
+
+  describe "instance methods" do
+    describe "#update_cached_likes" do
+      it "updates the cached likes with current like counts" do
+        bluff = create(:bluff)
+        create(:like, bluff: bluff)
+        create(:like, bluff: bluff)
+        Like.last.destroy
+
+        expect { 
+          bluff.update_cached_likes
+        }.to change(bluff, :cached_likes).by(1)
+      end
+    end
+  end
 end

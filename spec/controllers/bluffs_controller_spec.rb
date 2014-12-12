@@ -40,6 +40,18 @@ RSpec.describe BluffsController, type: :controller do
       get :index, match_id: 1
       expect(assigns(:bluffs)).to be_decorated
     end
+
+    context "with params[:sort] == popular" do
+      it "sorts @bluffs by likes in descending order" do
+        create(:like, bluff: bluff_2, user_id: 1)
+        create(:like, bluff: bluff_2, user_id: 2)
+        create(:like, bluff: bluff)
+        bluff_3 = create(:bluff)
+
+        get :index, match_id: 1, sort: 'popular'
+        expect(assigns(:bluffs)).to eq [bluff_2, bluff, bluff_3]
+      end
+    end
   end
 
   describe "GET show" do

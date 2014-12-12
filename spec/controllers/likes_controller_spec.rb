@@ -11,7 +11,7 @@ RSpec.describe LikesController, :type => :controller do
     request.env["HTTP_REFERER"] = match_bluffs_url(match) # for testing redirect_to :back
   end
 
-  describe "POST like" do
+  describe "POST create" do
     it "should require login" do
       sign_out user
       post :create, id: bluff
@@ -40,6 +40,18 @@ RSpec.describe LikesController, :type => :controller do
         it "redirects to bluff index" do
           post :create, id: bluff
           expect(response).to redirect_to :back
+        end
+
+        it "assigns the bluff to @bluff" do
+          post :create, id: bluff
+          expect(assigns(:bluff)).to eq bluff
+        end
+
+        it "increments cached_likes of the bluff by 1" do
+          expect { 
+            post :create, id: bluff
+            bluff.reload
+          }.to change(bluff, :cached_likes).by(1)
         end
       end
 
@@ -72,6 +84,7 @@ RSpec.describe LikesController, :type => :controller do
 
         before :each do
           @like = create(:like, user: user, bluff: bluff)
+          bluff.update_cached_likes
         end
 
         it "assigns the Like to @like" do
@@ -83,6 +96,18 @@ RSpec.describe LikesController, :type => :controller do
           expect {
             delete :destroy, id: bluff
           }.to change(Like, :count).by(-1)
+        end
+
+        it "assigns the bluff to @bluff" do
+          delete :destroy, id: bluff
+          expect(assigns(:bluff)).to eq bluff
+        end
+
+        it "reduce the cached_likes" do
+          expect { 
+            delete :destroy, id: bluff
+            bluff.reload
+          }.to change(bluff, :cached_likes).by(-1)
         end
       end
     end

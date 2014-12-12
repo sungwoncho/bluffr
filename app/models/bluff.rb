@@ -10,4 +10,15 @@ class Bluff < ActiveRecord::Base
   belongs_to :author, class_name: 'User', foreign_key: :user_id
   has_many :likes
   has_many :likers, through: :likes, source: :user
+
+  scope :sort, ->(rule){ 
+    case rule
+    when 'popular'
+      # todo
+    end
+  }
+
+  def update_cached_likes
+    update(cached_likes: self.likes.count)
+  end
 end

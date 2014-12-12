@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141211065955) do
+ActiveRecord::Schema.define(version: 20141211235149) do
 
   create_table "bluffs", force: true do |t|
-    t.text     "statement_1", limit: 90
-    t.text     "statement_2", limit: 90
+    t.text     "statement_1",  limit: 90
+    t.text     "statement_2",  limit: 90
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "match_id"
     t.integer  "user_id"
+    t.integer  "cached_likes",            default: 0
   end
 
   add_index "bluffs", ["match_id"], name: "index_bluffs_on_match_id"
