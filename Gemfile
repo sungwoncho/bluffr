@@ -59,6 +59,12 @@ gem 'devise'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+group :production do
+  gem 'pg'
+  gem 'puma'
+  gem 'rails_12factor'
+end
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
   gem 'factory_girl_rails', '~> 4.4.1'
