@@ -85,4 +85,13 @@ describe BluffDecorator, type: :decorator do
       expect(bluff.decorate.like_count).to eq 3
     end
   end
+
+  describe "authored_date" do
+    context "when bluff was created on 2014-11-1 10:30 pm" do
+      it "outputs 1 Nov 2014 10:30 PM" do
+        bluff = create(:bluff, created_at: DateTime.new(2014,11,1,22,30))
+        expect(bluff.decorate.authored_date).to eq '1 Nov 2014 10:30 PM'
+      end
+    end
+  end
 end

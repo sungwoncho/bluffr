@@ -18,6 +18,10 @@ class BluffDecorator < Draper::Decorator
     author.username
   end
 
+  def authored_date
+    model.created_at.strftime('%-d %b %Y %-l:%M %p')
+  end
+
   def like_count
     likes.count
   end
