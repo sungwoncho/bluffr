@@ -80,6 +80,11 @@ RSpec.describe BluffsController, type: :controller do
         get :show, match_id: match, id: bluff
         expect(assigns(:bluff)).to eq(bluff)
       end
+
+      it "decorates @bluff" do
+        get :show, match_id: match, id: bluff
+        expect(assigns(:bluff)).to be_decorated
+      end
     end
   end
 

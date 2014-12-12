@@ -29,7 +29,7 @@ class BluffsController < ApplicationController
     @bluff = @match.bluffs.new(bluff_params)
 
     respond_to do |format|
-      if @bluff.save & current_user.authored_bluffs << @bluff
+      if @bluff.save && current_user.authored_bluffs << @bluff
         format.html { redirect_to [@match, @bluff], notice: 'Bluff was successfully created.' }
         format.json { render :show, status: :created, location: [@match, @bluff] }
       else
@@ -66,7 +66,7 @@ class BluffsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bluff
-      @bluff = @match.bluffs.find(params[:id])
+      @bluff = @match.bluffs.find(params[:id]).decorate
     end
 
     def set_match
